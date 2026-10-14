@@ -14,7 +14,33 @@
 .footer{margin-top:54px;padding:24px 0 18px}.footer-top{gap:20px}.footer-about .brandmark{width:68px;height:68px}.footer-about p{display:none}.footer h4{margin:5px 0 12px}.footer-links{gap:9px;font-size:11px}.footer-bottom{align-items:center;gap:16px;margin-top:24px;padding-top:16px;font-size:10px}.footer-bottom span:first-child{flex:1}.footer-bottom span:nth-child(2){white-space:nowrap}.footer-bottom a{white-space:nowrap}
 @media(max-width:760px){.footer{margin-top:34px;padding:20px 0 14px}.footer-top{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.footer-about{display:none}.footer-about .brandmark{width:48px;height:48px}.footer-about p{display:none}.footer h4{font-size:9px;letter-spacing:.07em;line-height:1.3;margin:0 0 9px}.footer-links{gap:7px;font-size:10px;line-height:1.35}.footer-bottom{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:7px;margin-top:17px;padding-top:13px;font-size:10px;line-height:1.4}.footer-bottom span:nth-child(2),.footer-bottom a{display:none}.footer-bottom span:first-child{flex:none}}
 </style><link rel="stylesheet" href="shared.css">
-</head>
+
+<style id="cart-favorites-enhancements">
+.cart-line{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+.cart-line>img{width:66px;height:72px;object-fit:cover;border-radius:12px;background:#10251b;flex-shrink:0}
+.cart-line-main{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}
+.cart-line-main strong,.cart-line strong{font-size:12px;line-height:1.4}
+.cart-line small{font-size:11px;color:#a8bdb5}
+.cart-line-end{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.quantity-control{display:flex;align-items:center;gap:12px;margin-top:3px}
+.quantity-control button{width:27px;height:27px;border:1px solid rgba(0,255,140,.32);border-radius:8px;background:rgba(0,255,140,.06);color:#00ff8c;font-size:17px}
+.quantity-control span{font-size:12px;min-width:12px;text-align:center}
+.text-action,.mini-action{border:0;background:transparent;color:#00ff8c;font:inherit;font-size:11px;padding:3px 0;cursor:pointer;text-align:left}
+.text-action:hover,.mini-action:hover{text-decoration:underline}
+.drawer-total{display:flex;align-items:center;justify-content:space-between;padding:22px 0 16px;font-size:14px}
+.drawer-total strong{font-size:19px;color:#00ff8c}
+.drawer-checkout{width:100%;margin-bottom:10px}
+.drawer-note{font-size:11px;line-height:1.5;color:#8ca399;text-align:center}
+.clear-cart{display:block;margin:10px auto 0;color:#b5c7bf}
+.drawer-empty{text-align:center;padding:38px 10px}
+.drawer-empty-icon{font-size:36px;color:#00ff8c;margin-bottom:10px}
+.drawer-empty h4{font-size:17px;margin:8px 0}
+.drawer-empty p{font-size:12px;color:#a8bdb5;line-height:1.6;margin:0 auto 20px;max-width:280px}
+.mini-action{margin-top:5px}
+.mobile-nav button{position:relative}
+.mobile-count{position:absolute;top:2px;right:calc(50% - 24px);min-width:16px;height:16px;padding:0 4px;border-radius:10px;background:#00ff8c;color:#04140c;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center}
+@media(max-width:500px){.cart-line{gap:9px}.cart-line>img{width:55px;height:62px}.cart-line-main strong,.cart-line strong{font-size:11px}.quantity-control{gap:9px}}
+</style></head>
 <body>
 <div class="topline"><div class="wrap"><span>ВЫБИРАЙ ТО, ЧТО ТЕБЕ НРАВИТСЯ</span><span>Доставка по России · <b>Скоро запуск</b></span></div></div>
 <header class="header"><div class="wrap headmain">
@@ -48,19 +74,50 @@ const products=[
 {id:6,name:'Колонка Sound Mini',cat:'Технологии',price:3690,old:0,tag:'ВЫБОР ТИК',rating:'4.8',reviews:91,img:'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=85'},
 {id:7,name:'Очки Urban Shade',cat:'Аксессуары',price:1590,old:1990,tag:'-20%',rating:'4.6',reviews:36,img:'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=85'},
 {id:8,name:'Керамическая ваза Form',cat:'Дом',price:1290,old:0,tag:'НОВИНКА',rating:'4.9',reviews:28,img:'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=700&q=85'}];
-const cart=new Map(),favs=new Set();let mode='cart';const money=n=>n.toLocaleString('ru-RU')+' ₽';const $=id=>document.getElementById(id);
+const loadStoreList=(key)=>{try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(_){return[]}};
+const cart=new Map(loadStoreList('tik_cart_v1').filter(x=>Array.isArray(x)&&Number.isFinite(+x[0])&&Number.isFinite(+x[1])&&+x[1]>0).map(([id,n])=>[+id,+n]));
+const favs=new Set(loadStoreList('tik_favs_v1').map(Number).filter(Number.isFinite));
+let mode='cart';const money=n=>n.toLocaleString('ru-RU')+' ₽';const $=id=>document.getElementById(id);
+function saveStoreState(){try{localStorage.setItem('tik_cart_v1',JSON.stringify([...cart.entries()]));localStorage.setItem('tik_favs_v1',JSON.stringify([...favs]));}catch(_){showToast('Не удалось сохранить изменения в браузере')}}
 function showToast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2300)}
 function renderProducts(list=products){$('productGrid').innerHTML=list.length?list.map(p=>'<article class="product"><div class="product-image"><img loading="lazy" src="'+p.img+'" alt="'+p.name+'"><span class="tag">'+p.tag+'</span><button class="heart '+(favs.has(p.id)?'active':'')+'" data-fav="'+p.id+'" aria-label="'+(favs.has(p.id)?'Убрать из избранного':'В избранное')+'" title="'+(favs.has(p.id)?'Убрать из избранного':'В избранное')+'">'+(favs.has(p.id)?'<svg class="ui-icon filled-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.8a5.5 5.5 0 0 0-7.8 0L12 5.9l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.4a5.5 5.5 0 0 0 0-7.8Z"/></svg>':'<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.8a5.5 5.5 0 0 0-7.8 0L12 5.9l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.4a5.5 5.5 0 0 0 0-7.8Z"/></svg>')+'</button></div><div class="product-info"><div class="product-category">'+p.cat+'</div><div class="product-name">'+p.name+'</div><div class="rating"><span class="rating-star">★</span> '+p.rating+' <span>('+p.reviews+' отзывов)</span></div><div class="product-bottom"><div><span class="price">'+money(p.price)+'</span>'+(p.old?'<span class="old-price">'+money(p.old)+'</span>':'')+'</div><button class="add-btn" data-add="'+p.id+'" aria-label="Добавить в корзину" title="Добавить в корзину"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div></div></article>').join():'<p class="empty">Ничего не найдено. Попробуй другой запрос.</p>';document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>addCart(+b.dataset.add));document.querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>toggleFav(+b.dataset.fav));$('resultsLabel').textContent=list.length+' товаров'}
-function updateCounts(){$('cartCount').textContent=[...cart.values()].reduce((a,b)=>a+b,0);$('favCount').textContent=favs.size}
-function addCart(id){cart.set(id,(cart.get(id)||0)+1);updateCounts();showToast('Добавлено в корзину');}
-function toggleFav(id){favs.has(id)?favs.delete(id):favs.add(id);updateCounts();renderProducts(filterList());if(mode==='favs')renderDrawer();showToast(favs.has(id)?'Добавлено в избранное':'Удалено из избранного')}
+function updateCounts(){const cartCount=[...cart.values()].reduce((a,b)=>a+b,0);$('cartCount').textContent=cartCount;$('favCount').textContent=favs.size;document.querySelectorAll('#mobileCart .mobile-count').forEach(x=>x.remove());document.querySelectorAll('#mobileFav .mobile-count').forEach(x=>x.remove());if(cartCount){const b=document.createElement('span');b.className='mobile-count';b.textContent=cartCount;$('mobileCart').appendChild(b)}if(favs.size){const b=document.createElement('span');b.className='mobile-count';b.textContent=favs.size;$('mobileFav').appendChild(b)}}
+function addCart(id){if(!products.some(p=>p.id===id))return;cart.set(id,(cart.get(id)||0)+1);saveStoreState();updateCounts();if(mode==='cart'&&$('drawer').classList.contains('open'))renderDrawer();showToast('Добавлено в корзину');}
+function toggleFav(id){const nowAdded=!favs.has(id);nowAdded?favs.add(id):favs.delete(id);saveStoreState();updateCounts();renderProducts(filterList());if(mode==='favs')renderDrawer();showToast(nowAdded?'Добавлено в избранное':'Удалено из избранного')}
 function filterList(){const q=$('searchInput').value.trim().toLowerCase();return products.filter(p=>(!q||(p.name+' '+p.cat).toLowerCase().includes(q))&&(mode!=='favs'||favs.has(p.id)))}
 $('searchInput').addEventListener('input',()=>renderProducts(filterList()));document.querySelectorAll('[data-category]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();$('searchInput').value=a.dataset.category;mode='cart';renderProducts(products.filter(p=>p.cat===a.dataset.category));$('new').scrollIntoView({behavior:'smooth'})}));
 function openDrawer(next){mode=next;$('drawerTitle').textContent=next==='cart'?'Твоя корзина':next==='favs'?'Избранное':'Личный кабинет';$('drawer').classList.add('open');$('backdrop').classList.add('open');renderDrawer()}
 function closeDrawer(){$('drawer').classList.remove('open');$('backdrop').classList.remove('open')}
-function renderDrawer(){let body='';if(mode==='cart'){const items=[...cart.entries()];body=items.length?items.map(([id,n])=>{const p=products.find(x=>x.id===id);return '<div class="cart-line"><img src="'+p.img+'" alt=""><div style="flex:1"><strong>'+p.name+'</strong><small>'+money(p.price)+' · Количество: '+n+'</small><br><button data-remove="'+id+'">Убрать</button></div><strong>'+money(p.price*n)+'</strong></div>'}).join('')+'<div class="drawer-total"><span>Итого</span><strong>'+money(items.reduce((s,[id,n])=>s+products.find(p=>p.id===id).price*n,0))+'</strong></div><button class="btn btn-primary" style="width:100%" id="checkout">Перейти к оформлению ↗</button><p class="empty">Демонстрационный режим: заказ и оплата пока не отправляются.</p>':'<p class="empty">Пока здесь пусто. Найди что-нибудь особенное в каталоге.</p>'}else if(mode==='favs'){const items=products.filter(p=>favs.has(p.id));body=items.length?items.map(p=>'<div class="cart-line"><img src="'+p.img+'" alt=""><div style="flex:1"><strong>'+p.name+'</strong><small>'+money(p.price)+'</small><br><button data-add="'+p.id+'">В корзину +</button></div></div>').join():'<p class="empty">Сохраняй понравившиеся товары — они появятся здесь.</p>'}else{body='<p class="empty">Личный кабинет подключим следующим этапом. Сейчас можно изучать каталог и собирать корзину.</p><button class="btn btn-primary" id="accountContinue">Продолжить покупки ↗</button>'}$('drawerBody').innerHTML=body;document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart.delete(+b.dataset.remove);updateCounts();renderDrawer()});document.querySelectorAll('#drawerBody [data-add]').forEach(b=>b.onclick=()=>{addCart(+b.dataset.add);mode='cart';renderDrawer()});if($('checkout'))$('checkout').onclick=()=>showToast('Оформление подключим на следующем этапе');if($('accountContinue'))$('accountContinue').onclick=closeDrawer}
+function renderDrawer(){
+ let body='';
+ if(mode==='cart'){
+  const items=[...cart.entries()].filter(([id,n])=>products.some(p=>p.id===id)&&n>0);
+  if(!items.length){body='<div class="drawer-empty"><div class="drawer-empty-icon">🛍</div><h4>Корзина пока пуста</h4><p>Добавь понравившиеся товары — они появятся здесь.</p><button class="btn btn-primary" id="continueShopping">Перейти к покупкам</button></div>'}
+  else {
+   const total=items.reduce((s,[id,n])=>s+products.find(p=>p.id===id).price*n,0);
+   body=items.map(([id,n])=>{const p=products.find(x=>x.id===id);return '<div class="cart-line"><img src="'+p.img+'" alt="'+p.name+'"><div class="cart-line-main"><strong>'+p.name+'</strong><small>'+money(p.price)+' за шт.</small><div class="quantity-control"><button type="button" data-dec="'+id+'" aria-label="Уменьшить количество">−</button><span>'+n+'</span><button type="button" data-inc="'+id+'" aria-label="Увеличить количество">+</button></div></div><div class="cart-line-end"><strong>'+money(p.price*n)+'</strong><button class="text-action" type="button" data-remove="'+id+'">Удалить</button></div></div>'}).join('')+
+   '<div class="drawer-total"><span>Итого</span><strong>'+money(total)+'</strong></div><button class="btn btn-primary drawer-checkout" id="checkout">Перейти к оформлению ↗</button><p class="drawer-note">Пока это корзина без оформления заказа и онлайн-оплаты.</p><button class="text-action clear-cart" id="clearCart">Очистить корзину</button>';
+  }
+ } else if(mode==='favs'){
+  const items=products.filter(p=>favs.has(p.id));
+  body=items.length?items.map(p=>'<div class="cart-line"><img src="'+p.img+'" alt="'+p.name+'"><div class="cart-line-main"><strong>'+p.name+'</strong><small>'+money(p.price)+'</small><button class="mini-action" type="button" data-add="'+p.id+'">В корзину +</button></div><button class="text-action" type="button" data-fav-remove="'+p.id+'">Убрать</button></div>').join(''):'<div class="drawer-empty"><div class="drawer-empty-icon">♡</div><h4>Здесь пока пусто</h4><p>Нажимай на сердечко у товара, чтобы сохранить его в избранное.</p><button class="btn btn-primary" id="continueShopping">Посмотреть товары</button></div>';
+ } else {
+  body='<div class="drawer-empty"><div class="drawer-empty-icon">♙</div><h4>Личный кабинет</h4><p>Профиль, история заказов и вход в аккаунт будут доступны после подключения безопасной авторизации.</p><button class="btn btn-primary" id="accountContinue">Продолжить покупки</button></div>';
+ }
+ $('drawerBody').innerHTML=body;
+ document.querySelectorAll('#drawerBody [data-remove]').forEach(b=>b.onclick=()=>{cart.delete(+b.dataset.remove);saveStoreState();updateCounts();renderDrawer()});
+ document.querySelectorAll('#drawerBody [data-inc]').forEach(b=>b.onclick=()=>{const id=+b.dataset.inc;cart.set(id,(cart.get(id)||0)+1);saveStoreState();updateCounts();renderDrawer()});
+ document.querySelectorAll('#drawerBody [data-dec]').forEach(b=>b.onclick=()=>{const id=+b.dataset.dec,n=(cart.get(id)||0)-1;if(n<=0)cart.delete(id);else cart.set(id,n);saveStoreState();updateCounts();renderDrawer()});
+ document.querySelectorAll('#drawerBody [data-fav-remove]').forEach(b=>b.onclick=()=>{favs.delete(+b.dataset.favRemove);saveStoreState();updateCounts();renderProducts(filterList());renderDrawer()});
+ document.querySelectorAll('#drawerBody [data-add]').forEach(b=>b.onclick=()=>{addCart(+b.dataset.add);mode='favs';renderDrawer()});
+ if($('clearCart'))$('clearCart').onclick=()=>{cart.clear();saveStoreState();updateCounts();renderDrawer();showToast('Корзина очищена')};
+ if($('checkout'))$('checkout').onclick=()=>showToast('Оформление заказа подключим вместе с сервером и оплатой');
+ if($('continueShopping'))$('continueShopping').onclick=()=>{closeDrawer();$('catalog').scrollIntoView({behavior:'smooth'})};
+ if($('accountContinue'))$('accountContinue').onclick=closeDrawer;
+}
 $('cartOpen').onclick=()=>openDrawer('cart');$('favOpen').onclick=()=>openDrawer('favs');$('accountBtn').onclick=()=>openDrawer('account');$('mobileCart').onclick=()=>openDrawer('cart');$('mobileFav').onclick=()=>openDrawer('favs');$('mobileAccount').onclick=()=>openDrawer('account');$('drawerClose').onclick=closeDrawer;$('backdrop').onclick=closeDrawer;document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});$('emailForm').onsubmit=e=>{e.preventDefault();showToast('Спасибо! Подписка будет доступна после запуска.');e.target.reset()};$('adminLink').onclick=e=>{e.preventDefault();showToast('Админ-панель добавим отдельным этапом.')};
 renderProducts();
+updateCounts();
 
 // Automatic marketplace-style hero carousel: no CTA buttons.
 const heroSlides=[
