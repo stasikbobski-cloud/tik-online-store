@@ -1,0 +1,26 @@
+/* Единая дизайн-система шапки и подвала ТИК. Подключена на всех страницах. */
+:root{--bg:#051410;--bg2:#0a1f18;--panel:rgba(26,46,40,.72);--line:rgba(255,255,255,.13);--neon:#00ff8c;--neon2:#00ffa3;--gold:#d4b87a;--muted:#a8bdb5;--white:#fff}
+.header{position:sticky;top:0;z-index:20;background:rgba(5,20,16,.88);backdrop-filter:blur(22px);border-bottom:1px solid var(--line)}
+.headmain{width:min(1320px,calc(100% - 48px));height:78px;margin:auto;display:flex;align-items:center;gap:24px}
+.headmain .brand{display:flex;align-items:center;flex-shrink:0}
+.headmain .brandmark{width:62px;height:62px;object-fit:contain;display:block}
+.headmain .nav{display:flex;align-items:center;gap:22px;color:#d5e1dc;font-size:12px;flex:1}
+.headmain .nav a{white-space:nowrap;transition:color .2s}
+.headmain .nav a:hover{color:var(--neon)}
+.headmain .search{height:42px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:0 13px;max-width:300px;flex:1}
+.headmain .search svg{color:var(--muted);flex-shrink:0}
+.headmain .search input{min-width:0;width:100%;outline:0;border:0;background:transparent;color:white;font-size:12px}
+.headmain .actions{display:flex;gap:8px;align-items:center}
+.headmain .iconbtn{height:42px;min-width:42px;padding:0 11px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.035);color:white;display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;position:relative}
+.headmain .iconbtn:hover{border-color:rgba(0,255,140,.55);color:var(--neon)}
+.headmain .ui-icon{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.headmain .count{font-size:10px;color:var(--neon)}
+.footer{margin-top:70px;border-top:1px solid var(--line);padding:38px 0 24px;color:var(--muted);font-size:12px}
+.footer-top{width:100%;display:grid;grid-template-columns:1fr 1fr 1fr;gap:35px}
+.footer-top h4{font-size:11px;letter-spacing:.12em;color:var(--gold);margin:5px 0 18px}
+.footer-links{display:grid;gap:12px;color:var(--muted);font-size:12px}
+.footer-links a:hover{color:var(--neon)}
+.footer-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:35px;padding-top:20px;border-top:1px solid var(--line);color:#789087;font-size:10px}
+@media(max-width:1050px){.headmain{gap:14px}.headmain .nav{gap:14px}.headmain .nav a:nth-child(3){display:none}.headmain .search{max-width:230px}}
+@media(max-width:760px){.headmain{width:calc(100% - 28px);height:65px;gap:10px}.headmain .brandmark{width:48px;height:48px}.headmain .nav{display:flex;gap:12px;font-size:11px;justify-content:flex-end}.headmain .nav a:nth-child(2),.headmain .nav a:nth-child(3){display:none}.headmain .search{margin-left:auto;max-width:none;height:39px;flex:1}.headmain .search input{font-size:11px}.headmain .actions{gap:5px}.headmain .actions .account{display:none}.headmain .iconbtn{height:38px;min-width:36px;padding:0 7px;border-radius:11px}.footer{margin-top:50px;padding-top:30px}.footer-top{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 18px}.footer-top>div:last-child{grid-column:1/-1}.footer-bottom{flex-direction:column;gap:8px}}
+@media(max-width:430px){.headmain .nav{gap:8px;font-size:10px}.headmain .nav a:nth-child(4){display:none}.headmain .brandmark{width:43px;height:43px}.headmain .search{padding:0 8px}.headmain .iconbtn{min-width:32px;padding:0 5px}.headmain .count{font-size:9px}}
