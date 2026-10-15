@@ -39,6 +39,36 @@
 .catalog-subcategories{display:flex;flex-wrap:wrap;gap:7px}
 .catalog-subcategories a{padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:#dbe7e1}
 @media(max-width:760px){.catalog-menu{position:fixed;top:65px;left:10px;right:10px;transform:none;width:auto;max-height:calc(100dvh - 90px);overflow:auto;border-radius:15px;padding:15px}.catalog-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-tiles{gap:10px!important;padding:0 0 7px}.category-tiles .category{flex:0 0 145px;height:94px;border-radius:13px}.category-tiles .category img{opacity:.56}.category-tiles .cat-info{left:10px;right:8px;bottom:10px}.category-tiles .cat-info strong{font-size:12px}.category-tiles .category:after{background:linear-gradient(0deg,rgba(3,16,11,.9),rgba(3,16,11,.02) 90%)}}
+
+/* VK announcement: subtle, restrained motion without changing strip height */
+.topline{overflow:hidden;letter-spacing:.04em;text-transform:none}
+.topline .wrap{height:32px;justify-content:center}
+.vk-topline-link{display:inline-flex;align-items:center;justify-content:center;gap:9px;max-width:100%;color:#dce9e3;font-size:11px;font-weight:650;white-space:nowrap;transition:color .2s}
+.vk-topline-link svg{width:16px;height:16px;flex:0 0 16px;fill:currentColor;transition:transform .35s ease,color .25s}
+.vk-topline-link span{position:relative}
+.vk-topline-link span:after{content:"";position:absolute;left:0;right:100%;bottom:-3px;height:1px;background:#00ff8c;transition:right .35s ease}
+.vk-topline-link:hover{color:#00ff8c}
+.vk-topline-link:hover svg{transform:scale(1.12) rotate(-5deg)}
+.vk-topline-link:hover span:after{right:0}
+@keyframes vkGlow{0%,100%{text-shadow:0 0 0 rgba(0,255,140,0)}50%{text-shadow:0 0 13px rgba(0,255,140,.24)}}
+.vk-topline-link span{animation:vkGlow 4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.vk-topline-link span,.vk-topline-link svg,.vk-topline-link span:after{animation:none!important;transition:none!important}}
+/* Supplier category menu */
+.catalog-menu{width:min(1120px,calc(100vw - 32px));max-height:min(76vh,720px);overflow:auto;padding:18px;background:#071a13;border:1px solid rgba(255,255,255,.14);border-radius:0 0 18px 18px}
+.catalog-menu-head{display:flex;align-items:baseline;gap:12px;margin:0 0 14px}
+.catalog-menu-head strong{font-size:16px;color:#fff}
+.catalog-menu-head>span{font-size:10px;color:var(--muted,#a8bdb5)}
+.catalog-menu-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.catalog-group{min-width:0;padding:10px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.025)}
+.catalog-category{display:flex;align-items:center;gap:8px;min-height:35px;margin-bottom:7px;font-size:11px;font-weight:750;color:#f5faf7;line-height:1.35}
+.catalog-icon{display:grid;place-items:center;flex:0 0 29px;width:29px;height:29px;border-radius:9px;background:rgba(0,255,140,.09);font-size:16px}
+.catalog-sub-list{display:grid;gap:2px}
+.catalog-sub-list a{display:flex;align-items:center;gap:7px;padding:5px 2px;border-radius:6px;font-size:10px;line-height:1.35;color:#b8c9c1}
+.catalog-sub-list a:hover{background:rgba(0,255,140,.06);color:#00ff8c}
+.catalog-sub-icon{display:inline-grid;place-items:center;flex:0 0 16px;width:16px;font-size:11px;opacity:.92}
+@media(max-width:1000px){.catalog-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.topline .wrap{height:32px}.vk-topline-link{font-size:10px;gap:7px}.catalog-menu{top:65px;left:8px;right:8px;max-height:calc(100dvh - 86px);padding:12px;border-radius:14px}.catalog-menu-head{margin-bottom:10px}.catalog-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.catalog-group{padding:8px}.catalog-category{font-size:10px;gap:6px}.catalog-icon{width:25px;height:25px;flex-basis:25px;font-size:14px}.catalog-sub-list a{font-size:9px;padding:4px 0}.catalog-sub-icon{flex-basis:14px;width:14px}}
+@media(max-width:360px){.vk-topline-link{font-size:9px}.catalog-menu-grid{grid-template-columns:1fr}}
 </style><link rel="stylesheet" href="shared.css">
 
 <style id="cart-favorites-enhancements">
