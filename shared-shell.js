@@ -8,38 +8,35 @@
   if (existingTopLine) existingTopLine.outerHTML = topLineMarkup;
   else if (header) header.insertAdjacentHTML('beforebegin', topLineMarkup);
   const catalogMenu = '<div class="catalog-menu" id="tikCatalogMenu" hidden>' +
-    '<div class="catalog-menu-title">Категории товаров</div><div class="catalog-menu-grid">' +
-    '<a href="index.html#catalog" data-category="Технологии"><b>Электроника</b><span>Телефоны и гаджеты</span></a>' +
-    '<a href="index.html#catalog" data-category="Стиль"><b>Одежда и обувь</b><span>Одежда, обувь и сумки</span></a>' +
-    '<a href="index.html#catalog" data-category="Дом"><b>Дом и уют</b><span>Посуда, хранение и декор</span></a>' +
-    '<a href="index.html#catalog" data-category="Аксессуары"><b>Аксессуары</b><span>Часы и полезные мелочи</span></a>' +
-    '<a href="index.html#catalog" data-category="Игрушки"><b>Игрушки</b><span>Игры и товары для детей</span></a>' +
-    '<a href="index.html#catalog" data-category="Канцтовары"><b>Канцтовары</b><span>Для школы и офиса</span></a>' +
-    '</div><div class="catalog-menu-subtitle">Подкатегории</div><div class="catalog-subcategories">' +
-    '<a href="index.html#catalog" data-category="Технологии">Электроника</a><a href="index.html#catalog" data-category="Технологии">Гаджеты</a>' +
-    '<a href="index.html#catalog" data-category="Стиль">Одежда</a><a href="index.html#catalog" data-category="Стиль">Обувь</a>' +
-    '<a href="index.html#catalog" data-category="Дом">Посуда</a><a href="index.html#catalog" data-category="Дом">Декор</a>' +
-    '<a href="index.html#catalog" data-category="Аксессуары">Аксессуары</a><a href="index.html#catalog" data-category="Игрушки">Игрушки</a>' +
-    '<a href="index.html#catalog" data-category="Канцтовары">Канцтовары</a></div></div>';
+    '<div class="catalog-menu-title">Каталог товаров</div><div class="catalog-menu-grid">' +
+    '<section class="catalog-group"><a class="catalog-category" href="index.html#catalog" data-category="Технологии">Электроника</a><a href="index.html#catalog" data-category="Технологии">Наушники и аудио</a><a href="index.html#catalog" data-category="Технологии">Колонки</a><a href="index.html#catalog" data-category="Технологии">Гаджеты</a><a href="index.html#catalog" data-category="Технологии">Аксессуары для техники</a></section>' +
+    '<section class="catalog-group"><a class="catalog-category" href="index.html#catalog" data-category="Стиль">Одежда и обувь</a><a href="index.html#catalog" data-category="Стиль">Повседневная одежда</a><a href="index.html#catalog" data-category="Стиль">Кроссовки</a><a href="index.html#catalog" data-category="Стиль">Рюкзаки и сумки</a><a href="index.html#catalog" data-category="Стиль">Аксессуары для стиля</a></section>' +
+    '<section class="catalog-group"><a class="catalog-category" href="index.html#catalog" data-category="Дом">Дом и интерьер</a><a href="index.html#catalog" data-category="Дом">Освещение</a><a href="index.html#catalog" data-category="Дом">Посуда</a><a href="index.html#catalog" data-category="Дом">Декор</a><a href="index.html#catalog" data-category="Дом">Хранение и организация</a></section>' +
+    '<section class="catalog-group"><a class="catalog-category" href="index.html#catalog" data-category="Аксессуары">Часы и аксессуары</a><a href="index.html#catalog" data-category="Аксессуары">Часы</a><a href="index.html#catalog" data-category="Аксессуары">Очки</a><a href="index.html#catalog" data-category="Аксессуары">Украшения</a><a href="index.html#catalog" data-category="Аксессуары">Повседневные мелочи</a></section>' +
+    '<section class="catalog-group"><a class="catalog-category" href="index.html#catalog" data-category="Игрушки">Детям и игрушки</a><a href="index.html#catalog" data-category="Игрушки">Игрушки</a><a href="index.html#catalog" data-category="Игрушки">Игры</a><a href="index.html#catalog" data-category="Игрушки">Для творчества</a></section>' +
+    '<section class="catalog-group"><a class="catalog-category" href="index.html#catalog" data-category="Канцтовары">Канцтовары</a><a href="index.html#catalog" data-category="Канцтовары">Для школы</a><a href="index.html#catalog" data-category="Канцтовары">Для офиса</a><a href="index.html#catalog" data-category="Канцтовары">Блокноты и ручки</a></section>' +
+    '</div></div>';
   if (header) {
     if (isHome) {
       header.innerHTML = '<div class="wrap headmain">' +
         '<a class="brand" href="index.html" aria-label="ТИК — главная"><img class="brandmark" src="' + logo + '" alt="ТИК" width="42" height="42"></a>' +
         '<nav class="nav" aria-label="Основная навигация"><button class="catalog-trigger" type="button" aria-expanded="false" aria-controls="tikCatalogMenu" data-nav="catalog">Каталог</button><a href="#new">Новинки</a><a href="#special">Спецпредложения</a><a href="delivery.html">Доставка</a><a href="about.html" data-nav="about">О магазине</a></nav>' +
-        '<button class="catalog-trigger mobile-catalog-trigger" type="button" aria-expanded="false" aria-controls="tikCatalogMenu" data-nav="catalog">Каталог</button>' +
         '<label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="searchInput" placeholder="Поиск товаров" aria-label="Поиск товаров"></label>' +
         '<div class="actions"><button class="iconbtn" id="favOpen" aria-label="Избранное" title="Избранное"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.8a5.5 5.5 0 0 0-7.8 0L12 5.9l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.3 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg><span class="count" id="favCount">0</span></button>' +
         '<button class="iconbtn" id="cartOpen" aria-label="Корзина" title="Корзина"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h2l2.2 12.2a2 2 0 0 0 2 1.7h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="19" cy="21" r="1"/></svg><span class="count" id="cartCount">0</span></button><button class="iconbtn account" id="accountBtn">Войти</button></div></div>';
     } else {
       header.innerHTML = '<div class="wrap headmain"><a class="brand" href="index.html" aria-label="ТИК — главная"><img class="brandmark" src="' + logo + '" alt="ТИК" width="42" height="42"></a>' +
-        '<nav class="nav" aria-label="Основная навигация"><a href="index.html">Главная</a><button class="catalog-trigger" type="button" aria-expanded="false" aria-controls="tikCatalogMenu" data-nav="catalog">Каталог</button><a href="index.html#new">Новинки</a><a href="delivery.html">Доставка</a><a href="about.html" data-nav="about">О магазине</a></nav><button class="catalog-trigger mobile-catalog-trigger" type="button" aria-expanded="false" aria-controls="tikCatalogMenu" data-nav="catalog">Каталог</button></div>';
+        '<nav class="nav" aria-label="Основная навигация"><a href="index.html">Главная</a><button class="catalog-trigger" type="button" aria-expanded="false" aria-controls="tikCatalogMenu" data-nav="catalog">Каталог</button><a href="index.html#new">Новинки</a><a href="delivery.html">Доставка</a><a href="about.html" data-nav="about">О магазине</a></nav></div>';
     }
     header.insertAdjacentHTML('beforeend', catalogMenu);
   }
   document.addEventListener('click', event => {
-    const trigger = event.target.closest('.catalog-trigger');
+    const bottomCatalog = event.target.closest('.mobile-nav button');
+    const isBottomCatalog = bottomCatalog && bottomCatalog.textContent.trim().includes('Каталог');
+    const trigger = event.target.closest('.catalog-trigger') || (isBottomCatalog ? bottomCatalog : null);
     const menu = document.getElementById('tikCatalogMenu');
     if (trigger && menu) {
+      if (isBottomCatalog) event.preventDefault();
       const opening = menu.hidden;
       menu.hidden = !opening;
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', String(opening)));
