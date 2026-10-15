@@ -26,7 +26,7 @@
 .category-tiles .category{flex:0 0 190px;height:125px;scroll-snap-align:start}
 .category-tiles .cat-info{left:13px;right:10px;bottom:12px}
 .category-tiles .cat-info strong{font-size:14px}
-.catalog-trigger{appearance:none;border:0;background:transparent;color:inherit;font:inherit;padding:8px 0;cursor:pointer;white-space:nowrap}
+.hero-arrow[hidden]{display:none!important}.catalog-trigger{appearance:none;border:0;background:transparent;color:inherit;font:inherit;padding:8px 0;cursor:pointer;white-space:nowrap}
 .catalog-trigger:hover,.catalog-trigger[aria-expanded="true"]{color:var(--neon)}
 .catalog-menu{position:absolute;top:calc(100% - 1px);left:50%;transform:translateX(-50%);width:min(760px,calc(100vw - 32px));padding:20px;border:1px solid var(--line);border-radius:0 0 18px 18px;background:#081b14;box-shadow:0 24px 55px #0008;z-index:30}
 .catalog-menu[hidden]{display:none}
@@ -80,7 +80,7 @@
 <div class="actions"><button class="iconbtn" id="favOpen" aria-label="Избранное" title="Избранное"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.8a5.5 5.5 0 0 0-7.8 0L12 5.9l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.3 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg><span class="count" id="favCount">0</span></button><button class="iconbtn" id="cartOpen" aria-label="Корзина" title="Корзина"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h2l2.2 12.2a2 2 0 0 0 2 1.7h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="19" cy="21" r="1"/></svg><span class="count" id="cartCount">0</span></button><button class="iconbtn account" id="accountBtn">Войти</button></div>
 </div></header><script src="shared-shell.js"></script>
 <main>
-<section class="hero wrap"><div class="hero-shell" id="heroCarousel"><div class="hero-copy"><div class="eyebrow" id="heroEyebrow">МАГАЗИН ТИК</div><h1 id="heroTitle">Больше стиля.<br><em>Больше выбора.</em></h1><p id="heroText">Выбирай товары для себя, дома и повседневной жизни.</p></div><div class="hero-dots" id="heroDots" aria-label="Слайды баннера"><button class="active" type="button" aria-label="Баннер 1"></button><button type="button" aria-label="Баннер 2"></button><button type="button" aria-label="Баннер 3"></button></div></div></section>
+<section class="hero wrap"><div class="hero-shell" id="heroCarousel"><div class="hero-copy"><div class="eyebrow" id="heroEyebrow">МАГАЗИН ТИК</div><h1 id="heroTitle">Больше стиля.<br><em>Больше выбора.</em></h1><p id="heroText">Выбирай товары для себя, дома и повседневной жизни.</p></div><button class="hero-arrow hero-arrow-prev" id="heroPrev" type="button" aria-label="Предыдущий баннер" hidden></button><button class="hero-arrow hero-arrow-next" id="heroNext" type="button" aria-label="Следующий баннер" hidden></button><div class="hero-dots" id="heroDots" aria-label="Слайды баннера"><button class="active" type="button" aria-label="Баннер 1"></button><button type="button" aria-label="Баннер 2"></button><button type="button" aria-label="Баннер 3"></button></div></div></section>
 <section class="section wrap" id="catalog">
 <div class="section-head"><div><div class="kicker">КАТАЛОГ ТОВАРОВ</div><h2>Категории</h2><div class="section-sub">Выберите нужный раздел</div></div></div>
 <div class="categories category-tiles">
