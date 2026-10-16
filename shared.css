@@ -212,3 +212,14 @@
 .catalog-category-name{letter-spacing:.05px}
 .catalog-sub-link span{display:block}
 @media(max-width:760px){.catalog-category-toggle,.catalog-group>.catalog-category{font-size:16px!important;min-height:52px!important}.catalog-sub-link{font-size:15px!important;min-height:40px!important}.catalog-icon svg{width:25px!important;height:25px!important}.catalog-sub-link svg{width:19px!important;height:19px!important}}
+
+/* Keep homepage category tiles behind the banner out of the catalog view */
+.catalog-menu[hidden]{display:none!important}
+.catalog-menu:not([hidden]){z-index:10050!important;opacity:1!important;visibility:visible!important;background:#071b14!important;isolation:isolate}
+body.tik-catalog-open{overflow:hidden!important}
+body.tik-catalog-open .category-strip,
+body.tik-catalog-open .category-tiles,
+body.tik-catalog-open .home-categories,
+body.tik-catalog-open .category-grid,
+body.tik-catalog-open #categories,
+body.tik-catalog-open .categories-section{visibility:hidden!important}
