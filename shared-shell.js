@@ -110,7 +110,7 @@
       header.innerHTML = '<div class="wrap headmain"><a class="brand" href="index.html" aria-label="ТИК — главная"><img class="brandmark" src="' + logo + '" alt="ТИК" width="42" height="42"></a>' +
         '<nav class="nav" aria-label="Основная навигация"><a href="index.html">Главная</a><button class="catalog-trigger" type="button" aria-expanded="false" aria-controls="tikCatalogMenu" data-nav="catalog">Каталог</button><a href="index.html#new">Новинки</a><a href="delivery.html">Доставка</a><a href="about.html" data-nav="about">О магазине</a></nav></div>';
     }
-    header.insertAdjacentHTML('beforeend', catalogMenu);
+    document.body.insertAdjacentHTML('beforeend', catalogMenu);
   }
   document.addEventListener('click', event => {
     const categoryToggle = event.target.closest('.catalog-category-toggle');
