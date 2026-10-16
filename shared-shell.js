@@ -131,12 +131,14 @@
       if (isBottomCatalog) event.preventDefault();
       const opening = menu.hidden;
       menu.hidden = !opening;
+      document.body.classList.toggle('tik-catalog-open', opening);
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', String(opening)));
       if (isBottomCatalog) bottomCatalog.classList.toggle('active', opening);
       return;
     }
     if (menu && !event.target.closest('#tikCatalogMenu')) {
       menu.hidden = true;
+      document.body.classList.remove('tik-catalog-open');
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', 'false'));
       document.querySelectorAll('.catalog-category-toggle').forEach(button => button.setAttribute('aria-expanded', 'false'));
       document.querySelectorAll('.catalog-group').forEach(group => group.classList.remove('is-expanded'));
