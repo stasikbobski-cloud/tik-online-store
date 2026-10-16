@@ -133,8 +133,9 @@
       menu.hidden = !opening;
       if (opening) {
         const header = document.querySelector('header.header');
-        const headerBottom = header ? Math.max(0, Math.round(header.getBoundingClientRect().bottom)) : 0;
-        menu.style.setProperty('--catalog-top', headerBottom + 'px');
+        const topLine = document.querySelector('.topline');
+        const headerBottom = (topLine ? topLine.getBoundingClientRect().height : 0) + (header ? header.getBoundingClientRect().height : 0);
+        menu.style.setProperty('--catalog-top', Math.max(0, Math.round(headerBottom)) + 'px');
       }
       document.body.classList.toggle('tik-catalog-open', opening);
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', String(opening)));
