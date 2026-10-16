@@ -136,6 +136,9 @@
         const topLine = document.querySelector('.topline');
         const headerBottom = (topLine ? topLine.getBoundingClientRect().height : 0) + (header ? header.getBoundingClientRect().height : 0);
         menu.style.setProperty('--catalog-top', Math.max(0, Math.round(headerBottom)) + 'px');
+        const mobileNav = document.querySelector('.mobile-bottom-nav, .mobile-nav, .bottom-nav, .mobile-tabbar, nav[aria-label*=мобильн i]');
+        const navHeight = mobileNav ? Math.round(mobileNav.getBoundingClientRect().height) : 76;
+        menu.style.setProperty('--mobile-nav-height', Math.max(60, navHeight) + 'px');
       }
       document.body.classList.toggle('tik-catalog-open', opening);
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', String(opening)));
