@@ -143,7 +143,11 @@
       }
       document.body.classList.toggle('tik-catalog-open', opening);
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', String(opening)));
-      if (isBottomCatalog) bottomCatalog.classList.toggle('active', opening);
+      if (isBottomCatalog) {
+        document.querySelectorAll('.mobile-nav button').forEach(button => {
+          button.classList.toggle('active', opening ? button === bottomCatalog : button.textContent.trim() === 'Главная');
+        });
+      }
       return;
     }
     if (menu && !event.target.closest('#tikCatalogMenu')) {
