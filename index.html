@@ -267,7 +267,7 @@ function filterList(){const q=$('searchInput').value.trim().toLowerCase();const 
 function refreshCatalog(){renderProducts(filterList())}
 $('searchInput').addEventListener('input',refreshCatalog);$('catalogCategory')?.addEventListener('change',refreshCatalog);$('catalogSort')?.addEventListener('change',refreshCatalog);$('resetCatalog')?.addEventListener('click',e=>{e.preventDefault();$('searchInput').value='';$('catalogCategory').value='';$('catalogSort').value='default';mode='cart';refreshCatalog();$('new').scrollIntoView({behavior:'smooth'})});document.querySelectorAll('[data-category]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const map={'Технологии':'Технологии','Электроника':'Технологии','Стиль':'Стиль','Одежда и обувь':'Стиль','Дом':'Дом','Дом и уют':'Дом','Аксессуары':'Аксессуары','Игрушки':'Игрушки','Канцтовары':'Канцтовары'};const category=map[a.dataset.category]||a.dataset.category;$('searchInput').value='';$('catalogCategory').value=category;mode='cart';refreshCatalog();$('new').scrollIntoView({behavior:'smooth'})}));
 function openDrawer(next){mode=next;$('drawerTitle').textContent=next==='cart'?'Твоя корзина':next==='favs'?'Избранное':'Личный кабинет';$('drawer').classList.add('open');$('backdrop').classList.add('open');renderDrawer()}
-function closeDrawer(){$('drawer').classList.remove('open');$('backdrop').classList.remove('open')}
+function closeDrawer(){$('drawer').classList.remove('open');$('backdrop').classList.remove('open');if(mode==='favs'){mode='cart';renderProducts(filterList())}else mode='cart'}
 function renderDrawer(){
  let body='';
  if(mode==='cart'){
