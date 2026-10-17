@@ -133,12 +133,13 @@
       menu.hidden = !opening;
       if (opening) {
         const header = document.querySelector('header.header');
-        const topLine = document.querySelector('.topline');
-        const headerBottom = (topLine ? topLine.getBoundingClientRect().height : 0) + (header ? header.getBoundingClientRect().height : 0);
-        menu.style.setProperty('--catalog-top', Math.max(0, Math.round(headerBottom)) + 'px');
-        const mobileNav = document.querySelector('.mobile-bottom-nav, .mobile-nav, .bottom-nav, .mobile-tabbar, nav[aria-label*=мобильн i]');
-        const navHeight = mobileNav ? Math.round(mobileNav.getBoundingClientRect().height) : 76;
-        menu.style.setProperty('--mobile-nav-height', Math.max(60, navHeight) + 'px');
+        // Use the header's real on-screen bottom; the topline scrolls away and must not add a blank gap.
+        const headerBottom = header ? Math.round(header.getBoundingClientRect().bottom) : 0;
+        menu.style.setProperty('--catalog-top', Math.max(0, headerBottom) + 'px');
+        // Match the menu bottom to the actual top edge of the fixed mobile navigation.
+        const mobileNav = document.querySelector('.mobile-nav');
+        const navBottomGap = mobileNav ? Math.max(0, Math.round(window.innerHeight - mobileNav.getBoundingClientRect().top)) : 76;
+        menu.style.setProperty('--mobile-nav-bottom-gap', navBottomGap + 'px');
       }
       document.body.classList.toggle('tik-catalog-open', opening);
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', String(opening)));
