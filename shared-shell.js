@@ -123,8 +123,8 @@
       group && group.classList.toggle('is-expanded', Boolean(willOpen));
       return;
     }
-    const bottomCatalog = event.target.closest('.mobile-nav button');
-    const isBottomCatalog = bottomCatalog && bottomCatalog.textContent.trim().includes('Каталог');
+    const bottomCatalog = event.target.closest('.mobile-nav [data-mobile-catalog]');
+    const isBottomCatalog = Boolean(bottomCatalog);
     const trigger = event.target.closest('.catalog-trigger') || (isBottomCatalog ? bottomCatalog : null);
     const menu = document.getElementById('tikCatalogMenu');
     if (trigger && menu) {
