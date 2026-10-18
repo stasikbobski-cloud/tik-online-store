@@ -97,7 +97,7 @@
     if (/greenway/.test(t)) paths = '<path d="M20 4C9 4 4 8 4 15a5 5 0 0 0 5 5c7 0 11-7 11-16Z"/><path d="M4 20 14 10"/>';
     return '<svg class="catalog-line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">'+paths+'</svg>';
   };
-  if (/(?:^|\\/)catalog\\.html$/.test(location.pathname)) {
+  if (/(?:^|\/)catalog\.html$/.test(location.pathname)) {
     const main = document.querySelector('main');
     const intro = main && main.querySelector('.intro');
     if (intro && !document.getElementById('tikCatalogBrowser')) {
