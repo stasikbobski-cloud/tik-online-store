@@ -236,3 +236,16 @@ header.header{position:sticky!important;top:0!important;z-index:10060!important}
 .catalog-menu-grid{display:block!important;columns:1!important;column-count:1!important;max-height:none!important;overflow:visible!important}
 body.tik-catalog-open{overflow:hidden!important}
 @media(min-width:761px){.catalog-menu:not([hidden]){bottom:0!important;padding:12px max(24px,calc((100vw - 560px)/2)) 28px!important}}
+
+
+/* Catalog page category browser: visible list, not hidden behind the menu trigger. */
+.tik-catalog-browser{margin:26px 0 34px}
+.tik-catalog-browser h2{margin:0 0 16px;font-size:clamp(20px,3vw,27px);color:#fff}
+.tik-catalog-browser-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tik-catalog-browser-item{display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:9px;min-height:76px;padding:13px;border:1px solid rgba(255,255,255,.13);border-radius:14px;background:rgba(26,46,40,.72);color:#fff}
+.tik-catalog-browser-item:hover{border-color:rgba(0,255,140,.55);background:rgba(0,255,140,.05)}
+.tik-catalog-browser-icon{width:34px;height:34px;display:grid;place-items:center;color:#00ff8c}
+.tik-catalog-browser-icon svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tik-catalog-browser-name{font-size:13px;font-weight:650;line-height:1.35}
+.tik-catalog-browser-count{grid-column:2;color:#a8bdb5;font-size:11px;margin-top:-7px}
+@media(max-width:760px){.tik-catalog-browser-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tik-catalog-browser-item{grid-template-columns:28px minmax(0,1fr);gap:7px;padding:10px;min-height:70px;border-radius:12px}.tik-catalog-browser-icon{width:26px;height:26px}.tik-catalog-browser-icon svg{width:23px;height:23px}.tik-catalog-browser-name{font-size:12px}.tik-catalog-browser-count{font-size:10px}}
