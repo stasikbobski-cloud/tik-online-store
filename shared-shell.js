@@ -97,6 +97,22 @@
     if (/greenway/.test(t)) paths = '<path d="M20 4C9 4 4 8 4 15a5 5 0 0 0 5 5c7 0 11-7 11-16Z"/><path d="M4 20 14 10"/>';
     return '<svg class="catalog-line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">'+paths+'</svg>';
   };
+  if (/(?:^|\\/)catalog\\.html$/.test(location.pathname)) {
+    const main = document.querySelector('main');
+    const intro = main && main.querySelector('.intro');
+    if (intro && !document.getElementById('tikCatalogBrowser')) {
+      const browser = document.createElement('section');
+      browser.id = 'tikCatalogBrowser';
+      browser.className = 'tik-catalog-browser';
+      browser.innerHTML = '<h2>Категории товаров</h2><div class="tik-catalog-browser-grid">' +
+        catalogGroups.map(([oldIcon, name, subs], i) =>
+          '<a class="tik-catalog-browser-item" href="index.html#catalog" data-category-index="' + i + '">' +
+          '<span class="tik-catalog-browser-icon">' + iconSvg(name) + '</span><span class="tik-catalog-browser-name">' + name + '</span>' +
+          (subs.length ? '<span class="tik-catalog-browser-count">' + subs.length + ' подкатегорий</span>' : '') + '</a>'
+        ).join('') + '</div>';
+      intro.insertAdjacentElement('afterend', browser);
+    }
+  }
   const catalogMenu = '<div class="catalog-menu" id="tikCatalogMenu" hidden><div class="catalog-menu-head"><strong>Каталог товаров</strong><span>Разделы поставщика</span></div><div class="catalog-menu-grid">' + catalogGroups.map(([oldIcon,name,subs],i) => '<section class="catalog-group" data-catalog-group="'+i+'">' + (subs.length ? '<button class="catalog-category catalog-category-toggle" type="button" aria-expanded="false" aria-controls="catalogSubs'+i+'"><span class="catalog-icon">'+iconSvg(name)+'</span><span class="catalog-category-name">'+name+'</span><svg class="catalog-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><div class="catalog-sub-list" id="catalogSubs'+i+'" hidden>'+subs.map(sub => '<a href="index.html#catalog" class="catalog-sub-link">'+iconSvg(sub)+'<span>'+sub+'</span></a>').join('')+'</div>' : '<a class="catalog-category" href="index.html#catalog"><span class="catalog-icon">'+iconSvg(name)+'</span><span>'+name+'</span></a>')+'</section>').join('')+'</div></div>'
   if (header) {
     if (isHome) {
