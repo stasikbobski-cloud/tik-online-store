@@ -20,10 +20,10 @@ const products=[
 {id:8,name:'Керамическая ваза Form',cat:'Дом',price:1290,old:0,tag:'НОВИНКА',rating:'4.9',reviews:28,img:'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=700&q=85'}];
 const keyCart='tik_cart_v1',keyFav='tik_favs_v1';
 const read=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k)||'null');return v??d}catch(e){return d}};
-let cart=new Map(read(keyCart,[]).filter(x=>Array.isArray(x)).map(([id,n])=>[+id,+n]));
-let favs=new Set(read(keyFav,[]).map(Number));
+let cart=new Map(window.TIKStore.readCart());
+let favs=new Set(window.TIKStore.readFavorites());
 const money=n=>n.toLocaleString('ru-RU')+' ₽';
-const save=()=>{localStorage.setItem(keyCart,JSON.stringify([...cart]));localStorage.setItem(keyFav,JSON.stringify([...favs]));counts()};
+const save=()=>{window.TIKStore.write(cart,favs);counts()};
 function counts(){document.querySelectorAll('#cartCount').forEach(x=>x.textContent=[...cart.values()].reduce((a,b)=>a+b,0));document.querySelectorAll('#favCount').forEach(x=>x.textContent=favs.size)}
 const page=document.body.dataset.page;
 document.querySelectorAll('[data-nav]').forEach(a=>{if(a.dataset.nav===page)a.classList.add('active')});
