@@ -113,7 +113,41 @@
       intro.insertAdjacentElement('afterend', browser);
     }
   }
-  const catalogMenu = '<div class="catalog-menu" id="tikCatalogMenu" hidden><div class="catalog-menu-head"><strong>Каталог товаров</strong><span>Разделы поставщика</span></div><div class="catalog-menu-grid">' + catalogGroups.map(([oldIcon,name,subs],i) => '<section class="catalog-group" data-catalog-group="'+i+'">' + (subs.length ? '<button class="catalog-category catalog-category-toggle" type="button" aria-expanded="false" aria-controls="catalogSubs'+i+'"><span class="catalog-icon">'+iconSvg(name)+'</span><span class="catalog-category-name">'+name+'</span><svg class="catalog-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><div class="catalog-sub-list" id="catalogSubs'+i+'" hidden>'+subs.map(sub => '<a href="index.html#catalog" class="catalog-sub-link">'+iconSvg(sub)+'<span>'+sub+'</span></a>').join('')+'</div>' : '<a class="catalog-category" href="index.html#catalog"><span class="catalog-icon">'+iconSvg(name)+'</span><span>'+name+'</span></a>')+'</section>').join('')+'</div></div>'
+  let catalogMenu = '<div class="catalog-menu" id="tikCatalogMenu" hidden role="dialog" aria-modal="false" aria-label="Каталог товаров">' +
+    '<div class="catalog-sidebar-backdrop" tabindex="-1"></div>' +
+    '<aside class="catalog-sidebar" id="tikCatalogSidebar">' +
+    '<div class="catalog-sidebar-head"><div class="catalog-sidebar-title"><span class="catalog-sidebar-mark">'+iconSvg('каталог')+'</span><strong>Каталог</strong></div><button class="catalog-sidebar-close" type="button" aria-label="Закрыть каталог">✕</button></div>' +
+    '<nav class="catalog-sidebar-list" aria-label="Категории и подкатегории">' +
+    catalogGroups.map(function(item){ return item[1]; })
+      .concat(['Все товары','Новинки','Шок цена и распродажа'])
+      .map(function(name){ return '<a class="catalog-item catalog-item-top" href="catalog.html" data-cat="'+name.replace(/"/g,'&quot;')+'"><span class="catalog-item-icon">'+iconSvg(name)+'</span><span class="catalog-item-name">'+name+'</span></a>'; })
+      .join('') +
+    '</nav>' +
+    '</aside></div>';
+  // Fill the sidebar with the real OPTOM1 category tree (categories + subcategories)
+  window.__TIK_CAT_GROUPS = catalogGroups;
+  try {
+    const menuTmp = document.createElement('div');
+    menuTmp.innerHTML = catalogMenu;
+    const hostEl = menuTmp.querySelector('.catalog-sidebar-list');
+    if (hostEl) {
+      let html = '<a class="catalog-item catalog-item-top" href="catalog.html"><span class="catalog-item-icon">'+iconSvg('все товары')+'</span><span class="catalog-item-name">Все товары</span></a>';
+      catalogGroups.forEach(function(group){
+        const name = group[1], subs = group[2] || [];
+        if (!subs.length) {
+          html += '<a class="catalog-item catalog-item-top" href="catalog.html"><span class="catalog-item-icon">'+iconSvg(name)+'</span><span class="catalog-item-name">'+name+'</span></a>';
+          return;
+        }
+        html += '<div class="catalog-item catalog-group-node">' +
+          '<button class="catalog-item-toggle" type="button" aria-expanded="false"><span class="catalog-item-icon">'+iconSvg(name)+'</span><span class="catalog-item-name">'+name+'</span><svg class="catalog-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>' +
+          '<div class="catalog-sub-list" hidden>' + subs.map(function(sub){
+            return '<a class="catalog-sub-link" href="catalog.html"><span class="catalog-item-icon catalog-item-icon-sub">'+iconSvg(sub)+'</span><span>'+sub+'</span></a>';
+          }).join('') + '</div></div>';
+      });
+      hostEl.innerHTML = html;
+      catalogMenu = menuTmp.innerHTML;
+    }
+  } catch(e){}
   if (header) {
     if (isHome) {
       header.innerHTML = '<div class="wrap headmain">' +
@@ -125,14 +159,41 @@
     } else {
       header.innerHTML = '<div class="wrap headmain">' +
         '<a class="brand" href="index.html" aria-label="ТИК — главная"><img class="brandmark" src="' + logo + '" alt="ТИК" width="42" height="42"></a>' +
-        '<nav class="nav" aria-label="Основная навигация"><a href="index.html">Главная</a><a href="catalog.html" data-nav="catalog">Каталог</a><a href="index.html#new">Новинки</a><a href="delivery.html">Доставка</a><a href="about.html" data-nav="about">О магазине</a></nav>' +
+        '<nav class="nav" aria-label="Основная навигация"><a href="index.html">Главная</a><button class="catalog-trigger" type="button" aria-expanded="false" aria-controls="tikCatalogMenu" data-nav="catalog">Каталог</button><a href="index.html#new">Новинки</a><a href="delivery.html">Доставка</a><a href="about.html" data-nav="about">О магазине</a></nav>' +
         '<label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="searchInput" placeholder="Поиск товаров" aria-label="Поиск товаров"></label>' +
         '<div class="actions"><button class="iconbtn" id="favOpen" aria-label="Избранное" title="Избранное" onclick="location.href=\'favorites.html\'"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.8a5.5 5.5 0 0 0-7.8 0L12 5.9l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.3 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg><span class="count" id="favCount">0</span></button>' +
         '<button class="iconbtn" id="cartOpen" aria-label="Корзина" title="Корзина" onclick="location.href=\'cart.html\'"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h2l2.2 12.2a2 2 0 0 0 2 1.7h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="19" cy="21" r="1"/></svg><span class="count" id="cartCount">0</span></button><button class="iconbtn account" id="accountBtn" onclick="location.href=\'account.html\'">Войти</button></div></div>';
     }
     document.body.insertAdjacentHTML('beforeend', catalogMenu);
   }
+  function closeCatalogMenu(menu){
+    if (!menu) return;
+    menu.hidden = true;
+    menu.style.removeProperty('--catalog-top');
+    document.body.classList.remove('tik-catalog-open');
+    document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', 'false'));
+    document.querySelectorAll('.catalog-item-toggle').forEach(button => button.setAttribute('aria-expanded', 'false'));
+    document.querySelectorAll('.catalog-group-node').forEach(group => group.classList.remove('is-expanded'));
+    document.querySelectorAll('#tikCatalogMenu .catalog-sub-list').forEach(list => list.hidden = true);
+  }
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeCatalogMenu(document.getElementById('tikCatalogMenu'));
+  });
   document.addEventListener('click', event => {
+    const itemToggle = event.target.closest('.catalog-item-toggle');
+    if (itemToggle) {
+      const node = itemToggle.closest('.catalog-group-node');
+      const subList = node && node.querySelector('.catalog-sub-list');
+      const willOpen = subList && subList.hidden;
+      if (subList) subList.hidden = !willOpen;
+      itemToggle.setAttribute('aria-expanded', String(Boolean(willOpen)));
+      node && node.classList.toggle('is-expanded', Boolean(willOpen));
+      return;
+    }
+    if (event.target.closest('.catalog-sidebar-close') || event.target.closest('.catalog-sidebar-backdrop')) {
+      closeCatalogMenu(document.getElementById('tikCatalogMenu'));
+      return;
+    }
     const categoryToggle = event.target.closest('.catalog-category-toggle');
     if (categoryToggle) {
       const group = categoryToggle.closest('.catalog-group');
@@ -161,7 +222,7 @@
         const navBottomGap = mobileNav ? Math.max(0, Math.round(window.innerHeight - mobileNav.getBoundingClientRect().top)) : 76;
         menu.style.setProperty('--mobile-nav-bottom-gap', navBottomGap + 'px');
       }
-      document.body.classList.toggle('tik-catalog-open', opening);
+      if (window.matchMedia('(min-width:761px)').matches) document.body.classList.toggle('tik-catalog-open', opening);
       document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', String(opening)));
       if (isBottomCatalog) {
         document.querySelectorAll('.mobile-nav button').forEach(button => {
@@ -171,13 +232,7 @@
       return;
     }
     if (menu && !event.target.closest('#tikCatalogMenu')) {
-      menu.hidden = true;
-      menu.style.removeProperty('--catalog-top');
-      document.body.classList.remove('tik-catalog-open');
-      document.querySelectorAll('.catalog-trigger').forEach(button => button.setAttribute('aria-expanded', 'false'));
-      document.querySelectorAll('.catalog-category-toggle').forEach(button => button.setAttribute('aria-expanded', 'false'));
-      document.querySelectorAll('.catalog-group').forEach(group => group.classList.remove('is-expanded'));
-      document.querySelectorAll('.catalog-sub-list').forEach(list => list.hidden = true);
+      closeCatalogMenu(menu);
     }
   });
   document.addEventListener('DOMContentLoaded', () => {
