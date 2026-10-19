@@ -26,6 +26,7 @@ let favs=new Set((window.TIKStore&&typeof window.TIKStore.readFavorites==='funct
 const money=n=>n.toLocaleString('ru-RU')+' ₽';
 const save=()=>{if(window.TIKStore&&typeof window.TIKStore.write==='function')window.TIKStore.write(cart,favs);else{try{localStorage.setItem(keyCart,JSON.stringify([...cart.entries()]));localStorage.setItem(keyFav,JSON.stringify([...favs]));}catch(e){}}counts()};
 function counts(){document.querySelectorAll('#cartCount').forEach(x=>x.textContent=[...cart.values()].reduce((a,b)=>a+b,0));document.querySelectorAll('#favCount').forEach(x=>x.textContent=favs.size)}
+document.body.dataset.page='catalog';
 const page=document.body.dataset.page;
 document.querySelectorAll('[data-nav]').forEach(a=>{if(a.dataset.nav===page)a.classList.add('active')});
 function productCard(p){return '<article class="product"><img loading="lazy" src="'+p.img+'" alt="'+p.name+'"><div class="pinfo"><div class="cat">'+p.cat+'</div><div class="name">'+p.name+'</div><div class="price">'+money(p.price)+'</div><div class="row"><button class="btn" data-add="'+p.id+'">В корзину</button><button class="heart" data-fav="'+p.id+'" aria-label="Избранное">'+(favs.has(p.id)?'♥':'♡')+'</button></div></div></article>'}
