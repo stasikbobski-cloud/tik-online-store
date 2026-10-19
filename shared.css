@@ -9,6 +9,7 @@ header.header .wrap.headmain{width:100%;max-width:none;margin:0;padding:0 24px 0
 .headmain .nav{display:flex;align-items:center;gap:24px;margin-left:14px;color:#d5e1dc;font-size:12px;flex:1}
 .headmain .nav a{white-space:nowrap;transition:color .2s}
 .headmain .nav a:hover{color:var(--neon)}
+.headmain .nav a.active,.headmain .nav .catalog-trigger.active{color:var(--neon);font-weight:700}
 .headmain .search{height:42px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:0 13px;max-width:300px;flex:1}
 .headmain .search svg{color:var(--muted);flex-shrink:0}
 .headmain .search input{min-width:0;width:100%;outline:0;border:0;background:transparent;color:white;font-size:12px}
