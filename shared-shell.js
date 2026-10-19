@@ -110,10 +110,7 @@
           '<span class="tik-catalog-browser-icon">' + iconSvg(name) + '</span><span class="tik-catalog-browser-name">' + name + '</span>' +
           (subs.length ? '<span class="tik-catalog-browser-count">' + subs.length + ' подкатегорий</span>' : '') + '</a>'
         ).join('') + '</div>';
-      const catalogHost = main.querySelector('#pageContent');
-      if (catalogHost) catalogHost.insertAdjacentElement('beforebegin', browser);
-      else main.appendChild(browser);
-      browser.style.setProperty('display', 'block', 'important');
+      intro.insertAdjacentElement('afterend', browser);
     }
   }
   const catalogMenu = '<div class="catalog-menu" id="tikCatalogMenu" hidden><div class="catalog-menu-head"><strong>Каталог товаров</strong><span>Разделы поставщика</span></div><div class="catalog-menu-grid">' + catalogGroups.map(([oldIcon,name,subs],i) => '<section class="catalog-group" data-catalog-group="'+i+'">' + (subs.length ? '<button class="catalog-category catalog-category-toggle" type="button" aria-expanded="false" aria-controls="catalogSubs'+i+'"><span class="catalog-icon">'+iconSvg(name)+'</span><span class="catalog-category-name">'+name+'</span><svg class="catalog-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><div class="catalog-sub-list" id="catalogSubs'+i+'" hidden>'+subs.map(sub => '<a href="index.html#catalog" class="catalog-sub-link">'+iconSvg(sub)+'<span>'+sub+'</span></a>').join('')+'</div>' : '<a class="catalog-category" href="index.html#catalog"><span class="catalog-icon">'+iconSvg(name)+'</span><span>'+name+'</span></a>')+'</section>').join('')+'</div></div>'
