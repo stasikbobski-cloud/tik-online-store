@@ -6,6 +6,16 @@
 header.header .wrap.headmain{width:100%;max-width:none;margin:0;padding:0 24px 0 0;box-sizing:border-box}
 /* Гарантированно прижимаем логотип и меню к левому краю на всех страницах */
 header .wrap.headmain,.headmain{width:100%!important;max-width:none!important;margin:0!important;padding-left:0!important}
+/* Прижимаем логотип и меню вплотную к левому краю сайта на ВСЕХ страницах.
+   !important здесь обязателен: инлайновые стили в <head> страниц имеют больший приоритет,
+   чем общие правила без !important. */
+.wrap.headmain,.header .wrap.headmain,header .headmain,.header .wrap.head,header .head{width:100%!important;max-width:none!important;margin:0!important;padding-left:0!important;box-sizing:border-box!important}
+.headmain{padding-right:24px!important}
+.header .wrap.head,.head{padding-right:18px!important}
+@media(max-width:760px){.headmain{padding-right:14px!important}.header .wrap.head,.head{padding-right:14px!important}}
+/* Общие контейнеры (подвал, топлайн) — ширина с полями, но без центрирования: прижаты к левому краю */
+.wrap.footwrap,.wrap.topline-inner{width:calc(100% - 48px)!important;max-width:none!important;margin:0!important}
+@media(max-width:760px){.wrap.footwrap,.wrap.topline-inner{width:calc(100% - 28px)!important}}
 .headmain .brand{display:flex;align-items:center;flex-shrink:0}
 .headmain .brandmark{width:78px;height:78px;object-fit:contain;display:block}
 .headmain .nav{display:flex;align-items:center;gap:24px;margin-left:14px;color:#d5e1dc;font-size:12px;flex:1}
